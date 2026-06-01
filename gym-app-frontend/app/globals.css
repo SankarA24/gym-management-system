@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+/* ── Design tokens (dark theme default) ─────────────────── */
+:root {
+  --bg: #07090a;
+  --bg-1: #0c1213;
+  --bg-2: #11181a;
+  --bg-3: #161e21;
+  --bg-elev: #1a2326;
+
+  --border: #1a2326;
+  --border-soft: #131a1c;
+  --border-strong: #2a3539;
+
+  --accent: #22e8c4;
+  --accent-2: #1cd2b0;
+  --accent-soft: rgba(34, 232, 196, 0.10);
+  --accent-softer: rgba(34, 232, 196, 0.05);
+  --accent-deep: #0a3a31;
+  --accent-glow: 0 0 32px rgba(34, 232, 196, 0.18);
+  --accent-text-on: #061513;
+
+  --text: #e8f0ee;
+  --text-1: #c7d2cf;
+  --text-dim: #8a9a96;
+  --text-mute: #4f5d5a;
+  --text-faint: #38423f;
+
+  --danger: #ff6b6b;
+  --danger-soft: rgba(255, 107, 107, 0.10);
+  --danger-deep: #3a1313;
+
+  --warn: #ffc857;
+  --warn-soft: rgba(255, 200, 87, 0.10);
+  --warn-deep: #3a2a0e;
+
+  --info: #6ba8ff;
+  --info-soft: rgba(107, 168, 255, 0.10);
+  --info-deep: #102640;
+
+  --scrollbar-thumb: #1a2326;
+  --scrollbar-thumb-hover: #2a3539;
+
+  --gradient-sidebar: linear-gradient(180deg, #0a1011 0%, #07090a 100%);
+  --gradient-modal: linear-gradient(180deg, #10171a 0%, #0a1011 100%);
+  --gradient-brand-mark: linear-gradient(135deg, #0e2622 0%, #0a1a17 100%);
+}
+
+/* ── Light theme ─────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f3f5f4;
+  --bg-1: #ffffff;
+  --bg-2: #f7faf9;
+  --bg-3: #eef2f1;
+  --bg-elev: #ffffff;
+
+  --border: #e3e9e7;
+  --border-soft: #ecf0ef;
+  --border-strong: #cfd9d6;
+
+  --accent: #0fa68a;
+  --accent-2: #0d8f76;
+  --accent-soft: rgba(15, 166, 138, 0.10);
+  --accent-softer: rgba(15, 166, 138, 0.05);
+  --accent-deep: #c4eee4;
+  --accent-glow: 0 0 24px rgba(15, 166, 138, 0.18);
+  --accent-text-on: #ffffff;
+
+  --text: #0c1413;
+  --text-1: #28403d;
+  --text-dim: #5a6f6b;
+  --text-mute: #8898a4;
+  --text-faint: #b6c2c0;
+
+  --danger: #d94545;
+  --danger-soft: rgba(217, 69, 69, 0.10);
+  --danger-deep: #fae0e0;
+
+  --warn: #c98a14;
+  --warn-soft: rgba(201, 138, 20, 0.10);
+  --warn-deep: #fbedce;
+
+  --info: #3a6cc2;
+  --info-soft: rgba(58, 108, 194, 0.10);
+  --info-deep: #dde7f6;
+
+  --scrollbar-thumb: #d3dad8;
+  --scrollbar-thumb-hover: #b6c2c0;
+
+  --gradient-sidebar: linear-gradient(180deg, #ffffff 0%, #f7faf9 100%);
+  --gradient-modal: linear-gradient(180deg, #ffffff 0%, #f7faf9 100%);
+  --gradient-brand-mark: linear-gradient(135deg, #e3f5ef 0%, #cfeae0 100%);
+}
+
+/* ── Tailwind v4 theme tokens ────────────────────────────── */
+@theme inline {
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
+  --font-body:    var(--font-manrope), 'Manrope', system-ui, sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+  --font-sans:    var(--font-manrope), 'Manrope', system-ui, sans-serif;
+
+  --animate-fade: fade 0.2s ease;
+  --animate-pop:  pop 0.22s cubic-bezier(0.4, 0.4, 0.2, 1);
+
+  --spacing-13: 3.25rem;
+  --spacing-22: 5.5rem;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop  { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* ── Base ────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+}
+
+html {
+  color-scheme: dark;
+  transition: background 0.25s ease, color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+[data-theme="light"] { color-scheme: light; }
+
+html, body, #__next {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-manrope), 'Manrope', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(34,232,196,0.045), transparent 50%),
+    radial-gradient(900px 600px at -10% 110%, rgba(107,168,255,0.025), transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+[data-theme="light"] body {
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(15,166,138,0.06), transparent 50%),
+    radial-gradient(900px 600px at -10% 110%, rgba(58,108,194,0.04), transparent 50%),
+    var(--bg);
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font-family: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* ── Input date/time theme fix ───────────────────────────── */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}
+[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="light"] input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
+}
+
+select option { background: var(--bg-1); color: var(--text); }
