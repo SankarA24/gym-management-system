@@ -206,24 +206,6 @@ export default function PaymentsScreen() {
           label="Payments · Total"
           value={all.length}
         />
-
-        {/* <StatCard
-          icon="money"
-          iconVariant="warn"
-          label="Avg · Per Payment"
-          value={
-            all.length > 0
-              ? fmtMoney(
-                  Math.round(
-                    all.reduce(
-                      (s, p) => s + p.fee,
-                      0
-                    ) / all.length
-                  )
-                )
-              : '₹0'
-          }
-        /> */}
       </div>
 
       {/* CHART */}
