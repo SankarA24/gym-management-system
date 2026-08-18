@@ -1,6 +1,6 @@
 # Gym Management System
 
-A full-stack Gym Management System designed to simplify the management of gym members, memberships, payments, reminders, and administrative operations.
+A full-stack MERN application for managing gym members, memberships, payments, reminders, and day-to-day gym operations.
 
 ## Features
 
@@ -16,26 +16,22 @@ A full-stack Gym Management System designed to simplify the management of gym me
 ## Tech Stack
 
 ### Frontend
-
-* Next.js
-* React
-* TypeScript
-* CSS
-* REST API integration
+- React
+- Next.js
+- TypeScript
 
 ### Backend
+- Node.js
+- Express.js
+- TypeScript
 
-* Node.js
-* TypeScript
-* Fastify
-* REST APIs
-* JWT-based authentication
+### Database
+- MongoDB
 
-### Development Tools
-
-* Git
-* GitHub
-* npm
+### Other
+- REST APIs
+- JWT Authentication
+- Git & GitHub
 
 ## Project Structure
 
