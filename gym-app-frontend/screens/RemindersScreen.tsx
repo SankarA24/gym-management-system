@@ -19,6 +19,8 @@ export default function RemindersScreen() {
   const { members } = useAppState();
   const actions = useActions();
   const [tab, setTab] = useState<TabId>('all');
+  const ITEMS_PER_PAGE = 1;
+  const [page, setPage] = useState(1);
 
   const all = useMemo(() => dueSoonList(members), [members]);
   const overdue = all.filter(m => m._status === 'overdue');
@@ -32,20 +34,29 @@ export default function RemindersScreen() {
   );
 
   const TABS = [
-    { id: 'all' as TabId,      label: 'All',       count: overdue.length + soon.length },
-    { id: 'overdue' as TabId,  label: 'Overdue',   count: overdue.length },
-    { id: 'due-soon' as TabId, label: 'Due Soon',  count: soon.length },
-    { id: 'upcoming' as TabId, label: 'Upcoming',  count: upcoming.length },
+    { id: 'all' as TabId, label: 'All', count: overdue.length + soon.length },
+    { id: 'overdue' as TabId, label: 'Overdue', count: overdue.length },
+    { id: 'due-soon' as TabId, label: 'Due Soon', count: soon.length },
+    { id: 'upcoming' as TabId, label: 'Upcoming', count: upcoming.length },
   ];
 
   const list = tab === 'overdue' ? overdue : tab === 'due-soon' ? soon : tab === 'upcoming' ? (upcoming as unknown as MemberWithStatus[]) : [...overdue, ...soon];
+  const totalPages = Math.max(
+    1,
+    Math.ceil(list.length / ITEMS_PER_PAGE)
+  );
+
+  const paginatedList = list.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="flex flex-col gap-5 px-5 md:px-9.5 pt-4 md:pt-6 pb-28 md:pb-15 animate-fade">
       {/* Tabs */}
       <div className="flex gap-1 border-b border-(--border)">
         {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)}
+          <button key={t.id} onClick={() => { setTab(t.id); setPage(1); }}
             className={`px-4 py-3 text-[12px] font-semibold tracking-[0.14em] uppercase flex items-center gap-2.5 border-b-2 -mb-px transition-all ${tab === t.id ? 'text-(--accent) border-(--accent)' : 'text-(--text-dim) border-transparent'}`}
             style={mono}>
             {t.label}
@@ -61,12 +72,37 @@ export default function RemindersScreen() {
         {list.length === 0 ? (
           <Empty icon="check" title={tab === 'overdue' ? 'No overdue payments' : 'Nothing to remind'}
             body="Members in this category are all up to date." />
-        ) : list.map(m => (
+        ) : paginatedList.map(m => (
           <ReminderRow key={m.id} member={m}
             onClick={() => router.push(`/members/${m.id}`)}
             onMarkPaid={() => actions.markPaid(m.id)} />
         ))}
       </div>
+      {list.length > 0 && totalPages > 1 && (
+        <div className="flex items-center justify-between mt-4 px-2">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(p => p - 1)}
+            className="text-(--text-dim) disabled:opacity-40"
+            style={mono}
+          >
+            Prev
+          </button>
+
+          <span className="text-sm" style={mono}>
+            {page} / {totalPages}
+          </span>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(p => p + 1)}
+            className="text-(--text-dim) disabled:opacity-40"
+            style={mono}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

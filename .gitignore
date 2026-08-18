@@ -1,0 +1,7 @@
+.idea/
+gym-tracker-mobile/
+node_modules/
+.env
+.next/
+dist/
+build/
